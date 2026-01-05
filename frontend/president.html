@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>President Elect | Official Profile</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;700&family=Inter:wght@400;600;800&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+      :root {
+        --primary: #2563eb;
+        --primary-dark: #1e3a8a;
+        --accent: #fbbf24;
+        --bg-body: #f8fafc;
+        --text-main: #0f172a;
+        --text-muted: #64748b;
+      }
+
+      /* --- UPDATED BODY BACKGROUND --- */
+      body {
+        font-family: 'Inter', sans-serif;
+        margin: 0;
+        color: var(--text-main);
+
+        /* Base Color */
+        background-color: var(--bg-body);
+        /* We use two background layers:
+               1. A 90% opaque white/gray layer to mute the colors.
+               2. The Mongolian Flag SVG image.
+            */
+        background-image: linear-gradient(
+            rgba(248, 250, 252, 0.92),
+            rgba(248, 250, 252, 0.92)
+          ),
+          url('https://upload.wikimedia.org/wikipedia/commons/4/4c/Flag_of_Mongolia.svg');
+
+        /* Ensure the flag covers the screen and stays fixed while scrolling */
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-attachment: fixed; /* Makes it feel more premium */
+      }
+
+      /* HEADER */
+      .header {
+        background: var(--primary-dark);
+        color: white;
+        padding: 20px;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        position: relative;
+        z-index: 20;
+      }
+      .header-badge {
+        background: rgba(255, 255, 255, 0.15);
+        padding: 5px 15px;
+        border-radius: 50px;
+        font-size: 0.8rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        font-weight: 600;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      /* MAIN CONTAINER */
+      .container {
+        max-width: 900px;
+        margin: -40px auto 40px;
+        position: relative;
+        z-index: 10;
+        padding: 0 20px;
+      }
+      /* Added a subtle backdrop blur to the card to make it pop off the flag background */
+      .profile-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.15);
+        border: 1px solid #e2e8f0;
+      }
+
+      /* HERO SECTION */
+      .hero {
+        background: linear-gradient(
+          135deg,
+          var(--primary-dark) 0%,
+          var(--primary) 100%
+        );
+        color: white;
+        padding: 60px 40px 80px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      /* Replaced the cubes pattern with a subtle traditional ornament pattern if desired, or keep the cubes. Kept cubes for now for modern feel over the flag */
+      .hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('https://www.transparenttextures.com/patterns/cubes.png');
+        opacity: 0.1;
+      }
+
+      .photo-container {
+        position: relative;
+        display: inline-block;
+        margin-bottom: 20px;
+      }
+      .president-img {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        border: 8px solid rgba(255, 255, 255, 0.2);
+        object-fit: cover;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        background: white;
+      }
+      .crown-icon {
+        position: absolute;
+        top: -20px;
+        right: 0;
+        font-size: 3rem;
+        filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
+        animation: float 3s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateY(0px) rotate(10deg);
+        }
+        50% {
+          transform: translateY(-10px) rotate(10deg);
+        }
+        100% {
+          transform: translateY(0px) rotate(10deg);
+        }
+      }
+
+      .name-title {
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        opacity: 0.8;
+        margin-bottom: 10px;
+        font-weight: 700;
+      }
+      .name {
+        font-size: 3.5rem;
+        font-family: 'Merriweather', serif;
+        margin: 0;
+        font-weight: 700;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      }
+      .verified-badge {
+        background: var(--accent);
+        color: #78350f;
+        padding: 6px 16px;
+        border-radius: 20px;
+        font-weight: bold;
+        font-size: 0.9rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-top: 20px;
+        box-shadow: 0 4px 10px rgba(251, 191, 36, 0.4);
+      }
+
+      /* CONTENT SECTION */
+      .content {
+        padding: 50px;
+      }
+      .section-title {
+        font-size: 1.5rem;
+        color: var(--primary-dark);
+        font-weight: 800;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #f1f5f9;
+        padding-bottom: 10px;
+      }
+
+      .bio-text {
+        font-size: 1.15rem;
+        line-height: 1.8;
+        color: #334155;
+        margin-bottom: 40px;
+      }
+      .bio-text a {
+        color: var(--primary);
+        font-weight: 600;
+        text-decoration: none;
+        border-bottom: 2px solid #bfdbfe;
+        transition: 0.2s;
+      }
+      .bio-text a:hover {
+        background: #eff6ff;
+        border-color: var(--primary);
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+      }
+      .stat-box {
+        background: #f8fafc;
+        padding: 25px;
+        border-radius: 16px;
+        border: 1px solid #e2e8f0;
+        text-align: center;
+      }
+      .stat-val {
+        font-size: 3rem;
+        font-weight: 800;
+        color: var(--primary);
+        line-height: 1;
+        margin-bottom: 5px;
+      }
+      .stat-label {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      /* FOOTER */
+      .footer-action {
+        text-align: center;
+        padding: 40px;
+        background: #f1f5f9;
+        border-top: 1px solid #e2e8f0;
+      }
+      .btn-back {
+        display: inline-block;
+        padding: 14px 30px;
+        background: white;
+        color: var(--text-main);
+        font-weight: 600;
+        border: 1px solid #cbd5e1;
+        border-radius: 10px;
+        text-decoration: none;
+        transition: 0.2s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+      }
+      .btn-back:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        border-color: #94a3b8;
+      }
+
+      /* ERROR STATE */
+      #errorState {
+        display: none;
+        text-align: center;
+        padding: 100px 20px;
+      }
+      #contentView {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <div class="header-badge">🇲🇳 Official Government Announcement</div>
+    </div>
+
+    <div class="container">
+      <div id="errorState">
+        <div
+          style="
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 16px;
+            display: inline-block;
+          "
+        >
+          <h2 style="color: #d97706; font-size: 2rem; margin-top: 0">
+            ⚠️ Waiting for Results
+          </h2>
+          <p
+            style="
+              color: #64748b;
+              font-size: 1.1rem;
+              max-width: 500px;
+              margin: 10px auto 30px;
+            "
+          >
+            The election results have not been finalized or data is missing.
+          </p>
+          <a href="index.html" class="btn-back">⬅ Return to Dashboard</a>
+        </div>
+      </div>
+
+      <div id="contentView" class="profile-card">
+        <div class="hero">
+          <div class="photo-container">
+            <img
+              id="pPhoto"
+              class="president-img"
+              src=""
+              onerror="this.src='https://via.placeholder.com/200?text=No+Photo'"
+            />
+            <div class="crown-icon">👑</div>
+          </div>
+          <div class="name-title">The Newly Elected President</div>
+          <h1 id="pName" class="name">...</h1>
+          <div class="verified-badge">✓ Blockchain Verified Winner</div>
+        </div>
+
+        <div class="content">
+          <div class="section-title">Biography & Manifesto</div>
+          <div id="pBio" class="bio-text">Loading biography...</div>
+
+          <div class="section-title">Election Statistics</div>
+          <div class="stats-grid">
+            <div class="stat-box">
+              <div id="pVotes" class="stat-val">0</div>
+              <div class="stat-label">Total Valid Votes</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-val">100%</div>
+              <div class="stat-label">Consensus Integrity</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-action">
+          <a href="index.html" class="btn-back"
+            >⬅ Return to Election Dashboard</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        try {
+          const rawData = localStorage.getItem('winnerData');
+          if (!rawData) throw new Error('No data found');
+          const data = JSON.parse(rawData);
+
+          document.getElementById('pName').innerText = data.name || 'Unknown';
+          document.getElementById('pBio').innerHTML =
+            data.bio || 'No biography provided.';
+          document.getElementById('pVotes').innerText = data.votes || '0';
+          if (data.photo && data.photo.length > 5) {
+            document.getElementById('pPhoto').src = data.photo;
+          }
+          document.getElementById('contentView').style.display = 'block';
+
+          if (typeof confetti === 'function') {
+            var end = Date.now() + 2.5 * 1000;
+            (function frame() {
+              // Used Red blue and Gold for the confetti to match the flag
+              confetti({
+                particleCount: 4,
+                angle: 60,
+                spread: 55,
+                origin: { x: 0 },
+                colors: ['#dc2626', '#2563eb', '#fbbf24'],
+              });
+              confetti({
+                particleCount: 4,
+                angle: 120,
+                spread: 55,
+                origin: { x: 1 },
+                colors: ['#dc2626', '#2563eb', '#fbbf24'],
+              });
+              if (Date.now() < end) requestAnimationFrame(frame);
+            })();
+          }
+        } catch (err) {
+          console.error('Profile Error:', err);
+          document.getElementById('errorState').style.display = 'block';
+        }
+      });
+    </script>
+  </body>
+</html>
