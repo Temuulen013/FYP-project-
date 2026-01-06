@@ -162,6 +162,13 @@
           <button class="btn btn-end" onclick="endElection()">
             🔴 End Election
           </button>
+          <button
+            class="btn"
+            style="background: #64748b; margin-top: 10px"
+            onclick="resetLocalData()"
+          >
+            🗑️ Reset Website Data
+          </button>
         </div>
       </div>
 
@@ -230,6 +237,7 @@
           alert(e.reason);
         }
       }
+
       async function addCandidate() {
         try {
           const n = document.getElementById('cName').value;
@@ -277,6 +285,17 @@
         div.className = 'log-entry';
         div.innerHTML = `<span style="color:#22d3ee;">></span> ${msg}`;
         box.prepend(div);
+      }
+      async function resetLocalData() {
+        if (
+          confirm(
+            'This will clear the Winner Profile and Login Session from this browser. Continue?'
+          )
+        ) {
+          localStorage.clear();
+          alert('✅ Website data cleared! You can now start a fresh demo.');
+          window.location.reload();
+        }
       }
 
       init();
