@@ -1,124 +1,99 @@
-Markdown
+🗳️ Blockchain Election Voting System
+A decentralized voting application built with Solidity, Hardhat, and Ethers.js.
 
-# 🗳️ SecureVote: Blockchain-Based Voting System
+📌 Project Overview
+This project is a blockchain-based voting system designed to ensure transparency and security in elections. It features a dashboard for the Election Commission (Admin) to manage candidates and an interface for voters to cast their ballots securely via MetaMask.
 
-A decentralized election system built on the Ethereum blockchain (Ganache) that ensures transparency, security, and immutability. This project features a full Voter Dashboard, an Admin Portal, and a Live Blockchain Audit Log.
+🛠️ Tech Stack
+Smart Contract: Solidity
 
-## ✨ Features
+Development Environment: Hardhat (Local Blockchain)
 
-- **Decentralized Voting:** Votes are stored on the blockchain and cannot be altered.
-- **Identity Verification:** Users register with a Name and Government ID.
-- **Admin Control:** Dedicated portal to add candidates and control election status (Start/End).
-- **Transparency:** A live "Audit Log" shows every transaction (Registration/Vote) in real-time.
-- **Double-Voting Protection:** One ID = One Vote. Smart Contract enforced.
-- **Results:** Automatic winner calculation and official profile generation.
+Frontend: HTML/CSS/JavaScript
 
-## 🛠️ Technology Stack
+Library: Ethers.js (v6)
 
-- **Frontend:** HTML5, CSS3 (Modern UI), JavaScript (Ethers.js)
-- **Backend:** Solidity (Smart Contracts)
-- **Blockchain:** Ganache (Local Ethereum Testnet)
-- **Wallet:** MetaMask (Browser Extension)
+Wallet: MetaMask
 
----
+🚀 Getting Started (Development Setup)
+Follow these steps in order to get the project running on your local machine.
 
-## 🚀 Installation Guide
+1. Prerequisites
+Ensure you have the following installed:
 
-### Prerequisites
-1.  **Node.js** installed (v14 or higher).
-2.  **MetaMask** extension installed in your browser.
-3.  **Git** installed.
+Node.js (v18+ recommended)
 
-### 1. Clone the Repository
-```bash
-git clone [https://github.com/YourName/voting-system-fyp.git](https://github.com/YourName/voting-system-fyp.git)
-cd voting-system-fyp
-2. Install Dependencies
+Git
+
+MetaMask Browser Extension
+
+2. Installation
+Clone the repository and install the dependencies:
+
 Bash
 
+git clone <your-repo-link>
+cd election-voting
 npm install
-3. Start Local Blockchain
-Open a new terminal and run:
+3. Local Blockchain Setup
+In a new terminal, start the Hardhat node:
 
 Bash
 
 npm run chain
-# OR
-npx ganache --chainId 1337
-Keep this terminal running!
+Note: Keep this terminal open. Hardhat will provide 20 test accounts. Copy the Private Key of Account #0 and import it into your MetaMask.
 
-4. Deploy Smart Contract
-Open a second terminal and run:
+4. Deploy the Smart Contract
+In a second terminal, deploy the contract to the local network:
 
 Bash
 
-node deploy.js
-Copy the "Contract Address" shown in the terminal if needed, but the app should detect it automatically.
+npm run deploy
+This command deploys the contract and automatically updates the frontend/Voting.json file with the new contract address and ABI.
 
-🎮 Usage Guide
-A. Setup MetaMask
-Open MetaMask -> Click the Network Dropdown -> Add Network.
+5. Launch the Frontend
+In a third terminal, start the local web server:
 
-Add a network manually:
+Bash
 
-Network Name: Localhost 8545
+npm run dev
+Open your browser to http://localhost:3000.
 
-RPC URL: http://127.0.0.1:8545
+🦊 MetaMask Configuration
+To interact with the system, configure MetaMask with these settings:
 
-Chain ID: 1337
+Network Name: Hardhat Local
+
+New RPC URL: http://127.0.0.1:8545
+
+Chain ID: 31337
 
 Currency Symbol: ETH
 
-Import Accounts: Import the "Private Keys" from your Ganache terminal to get free test ETH.
-
-Important: If you restart Ganache, go to Settings > Advanced > Clear activity tab data in MetaMask to avoid errors.
-
-B. Admin Portal (Setup Election)
-Open frontend/admin.html in your browser (or navigate via the dashboard).
-
-Login with the first account (Admin Account).
-
-Add Candidates: Enter Name, Photo URL, and Bio.
-
-Start Election: Click the "Start Election" button.
-
-C. Voter Dashboard (Voting)
-Open frontend/index.html.
-
-Register: Enter your Name and a unique ID (e.g., ID-101).
-
-Vote: Browse the ballot and click "Vote".
-
-Transparency: Check the bottom of the Admin page to see your vote recorded on the blockchain live.
+⚠️ Important: If you restart the Hardhat node, you must reset your MetaMask account (Settings > Advanced > Clear Activity Tab Data) to avoid "Nonce" errors.
 
 📂 Project Structure
-voting-system-fyp/
-├── contracts/          # Solidity Smart Contracts (Voting.sol)
-├── frontend/           # The Website Files
-│   ├── index.html      # Voter Dashboard (Login/Vote)
-│   ├── admin.html      # Admin Control Center
-│   └── president.html  # Winner Profile Page
-├── deploy.js           # Script to put contract on blockchain
-├── package.json        # Project settings & dependencies
-└── README.md           # This file
-⚠️ Troubleshooting
-"Nonce too high" Error in MetaMask: This happens when you restart the blockchain.
+contracts/: Contains the Solidity smart contract (Voting.sol).
 
-Fix: Open MetaMask > Settings > Advanced > Clear activity tab data.
+scripts/: Deployment scripts for Hardhat.
 
-"Contract not found" / Loading forever:
+frontend/: The web interface and Voting.json configuration.
 
-Make sure you ran node deploy.js.
+hardhat.config.js: Hardhat network and compiler settings.
 
-Make sure you are on the correct network (Localhost 8545).
+🔄 Syncing Between Devices (Git Workflow)
+Before switching between your PC and Laptop, use these commands:
 
-University Final Year Project (2025)
+On the machine you are leaving:
 
+Bash
 
-### ✅ Final Step
-1.  Save this file.
-2.  Run `git add README.md`
-3.  Run `git commit -m "Added documentation"`
-4.  Run `git push`
+git add .
+git commit -m "Describe your changes"
+git push origin hardhat-migration
+On the machine you are starting on:
 
-Your repository is now professional and ready for submission!
+Bash
+
+git pull origin hardhat-migration
+npm install   # If it's the first time on this machine
