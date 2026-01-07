@@ -38,7 +38,6 @@
         flex-direction: column;
       }
 
-      /* --- NAVIGATION --- */
       nav {
         background: rgba(255, 255, 255, 0.9);
         backdrop-filter: blur(10px);
@@ -93,7 +92,6 @@
         background: #fef2f2;
       }
 
-      /* --- AUTH SCREEN --- */
       .auth-wrapper {
         flex: 1;
         display: flex;
@@ -184,7 +182,6 @@
         text-decoration: underline;
       }
 
-      /* --- DASHBOARD --- */
       .container {
         max-width: 1100px;
         margin: 40px auto;
@@ -219,7 +216,6 @@
         color: #64748b;
       }
 
-      /* Ballot Grid */
       .ballot-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -296,7 +292,6 @@
         background: #f8fafc;
       }
 
-      /* Winner & Audit Sections */
       .winner-box {
         background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
         border: 2px solid #bfdbfe;
@@ -349,7 +344,6 @@
         border-bottom: 1px solid rgba(255, 255, 255, 0.05);
       }
 
-      /* Toast */
       #toast {
         visibility: hidden;
         background-color: #1e293b;
@@ -447,7 +441,7 @@
               padding: 2px 8px;
               border-radius: 4px;
             "
-            >local version</span
+            >local</span
           >
         </div>
         <div class="nav-items">
@@ -558,19 +552,80 @@
     <div id="toast">Message</div>
 
     <script>
-      // --- PASTE YOUR EXISTING JAVASCRIPT HERE ---
-      // (Use the exact same script logic from our previous conversation.
-      // The HTML IDs are all the same, so your logic will work perfectly.)
+      let contractAddress;
+      let contractABI;
+      let contract;
 
-      let contract, signer;
-      const jsonUrl = './Voting.json?t=' + Date.now();
+      let signer;
+      async function login() {
+        const jsonUrl = './Voting.json';
+
+        try {
+          const response = await fetch(jsonUrl);
+          if (!response.ok) throw new Error('Could not find Voting.json');
+
+          const data = await response.json();
+          const contractAddress = data.address;
+          const contractABI = data.abi;
+
+          if (!window.ethereum) return alert('Please install MetaMask');
+
+          const provider = new ethers.BrowserProvider(window.ethereum);
+          signer = await provider.getSigner();
+          contract = new ethers.Contract(contractAddress, contractABI, signer);
+
+          console.log('Connected to contract at:', contractAddress);
+        } catch (error) {
+          console.error('Connection Error:', error);
+          alert('Connection failed: ' + error.message);
+        }
+      }
 
       async function init() {
-        const savedSession = localStorage.getItem('userSession');
-        if (savedSession) {
-          const user = JSON.parse(savedSession);
-          await connectWallet();
-          showDashboard(user.name, user.address);
+        const response = await fetch('./Voting.json');
+        const data = await response.json();
+        const newAddress = data.address;
+
+        const savedAddress = localStorage.getItem('lastContractAddress');
+
+        if (savedAddress !== newAddress) {
+          console.log(
+            '🚀 New Blockchain detected! Wiping old browser cache...'
+          );
+          localStorage.clear();
+          localStorage.setItem('lastContractAddress', newAddress);
+          location.reload();
+          return;
+        }
+      }
+
+      window.onload = init;
+      function resetSystemData() {
+        console.log('🔄 Reset process started...');
+
+        try {
+          localStorage.clear();
+          console.log('✅ LocalStorage cleared.');
+
+          sessionStorage.clear();
+          console.log('✅ SessionStorage cleared.');
+
+          document.cookie.split(';').forEach(function (c) {
+            document.cookie = c
+              .replace(/^ +/, '')
+              .replace(
+                /=.*/,
+                '=;expires=' + new Date().toUTCString() + ';path=/'
+              );
+          });
+          console.log('✅ Cookies cleared.');
+
+          alert('System Data Reset! Your browser memory is now clean.');
+
+          window.location.href = window.location.pathname + '?t=' + Date.now();
+        } catch (e) {
+          console.error('❌ Reset failed:', e);
+          alert('Reset Error: ' + e.message);
         }
       }
 
@@ -585,7 +640,7 @@
         if (!window.ethereum) return alert('Install MetaMask');
         const provider = new ethers.BrowserProvider(window.ethereum);
         signer = await provider.getSigner();
-        const res = await fetch(jsonUrl);
+        const res = await fetch('./Voting.json');
         const data = await res.json();
         contract = new ethers.Contract(data.address, data.abi, signer);
         return await signer.getAddress();
@@ -698,15 +753,15 @@
           const div = document.createElement('div');
           div.className = 'candidate-card';
           div.innerHTML = `
-                    <div class="card-img-wrap">${imgHtml}</div>
-                    <div class="card-body">
-                        <h3>${name}</h3>
-                        <p>${bios[i] || ''}</p>
-                        <button class="btn-vote" onclick="vote(${i})" ${
+                      <div class="card-img-wrap">${imgHtml}</div>
+                      <div class="card-body">
+                          <h3>${name}</h3>
+                          <p>${bios[i] || ''}</p>
+                          <button class="btn-vote" onclick="vote(${i})" ${
             !isStarted ? 'disabled' : ''
           }>VOTE NOW</button>
-                    </div>
-                `;
+                      </div>
+                  `;
           list.appendChild(div);
         });
       }

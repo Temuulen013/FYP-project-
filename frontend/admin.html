@@ -127,7 +127,6 @@
         margin-bottom: 5px;
       }
 
-      /* Terminal Style */
       .terminal {
         background: #1e293b;
         color: #38bdf8;
@@ -162,13 +161,6 @@
           <button class="btn btn-end" onclick="endElection()">
             🔴 End Election
           </button>
-          <button
-            class="btn"
-            style="background: #64748b; margin-top: 10px"
-            onclick="resetLocalData()"
-          >
-            🗑️ Reset Website Data
-          </button>
         </div>
       </div>
 
@@ -196,7 +188,6 @@
     </div>
 
     <script>
-      // --- ADMIN SCRIPT ---
       let contract, signer;
       const jsonUrl = './Voting.json?t=' + Date.now();
 
@@ -216,7 +207,6 @@
           return;
         }
 
-        // Load History
         loadAuditHistory();
         setupLiveEvents();
       }
@@ -285,17 +275,6 @@
         div.className = 'log-entry';
         div.innerHTML = `<span style="color:#22d3ee;">></span> ${msg}`;
         box.prepend(div);
-      }
-      async function resetLocalData() {
-        if (
-          confirm(
-            'This will clear the Winner Profile and Login Session from this browser. Continue?'
-          )
-        ) {
-          localStorage.clear();
-          alert('✅ Website data cleared! You can now start a fresh demo.');
-          window.location.reload();
-        }
       }
 
       init();

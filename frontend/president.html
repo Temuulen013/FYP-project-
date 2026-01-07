@@ -19,32 +19,22 @@
         --text-muted: #64748b;
       }
 
-      /* --- UPDATED BODY BACKGROUND --- */
       body {
         font-family: 'Inter', sans-serif;
         margin: 0;
         color: var(--text-main);
-
-        /* Base Color */
         background-color: var(--bg-body);
-        /* We use two background layers:
-               1. A 90% opaque white/gray layer to mute the colors.
-               2. The Mongolian Flag SVG image.
-            */
         background-image: linear-gradient(
             rgba(248, 250, 252, 0.92),
             rgba(248, 250, 252, 0.92)
           ),
           url('https://upload.wikimedia.org/wikipedia/commons/4/4c/Flag_of_Mongolia.svg');
-
-        /* Ensure the flag covers the screen and stays fixed while scrolling */
         background-size: cover;
         background-position: center center;
         background-repeat: no-repeat;
-        background-attachment: fixed; /* Makes it feel more premium */
+        background-attachment: fixed;
       }
 
-      /* HEADER */
       .header {
         background: var(--primary-dark);
         color: white;
@@ -68,7 +58,6 @@
         border: 1px solid rgba(255, 255, 255, 0.2);
       }
 
-      /* MAIN CONTAINER */
       .container {
         max-width: 900px;
         margin: -40px auto 40px;
@@ -76,7 +65,6 @@
         z-index: 10;
         padding: 0 20px;
       }
-      /* Added a subtle backdrop blur to the card to make it pop off the flag background */
       .profile-card {
         background: rgba(255, 255, 255, 0.95);
         backdrop-filter: blur(10px);
@@ -86,7 +74,6 @@
         border: 1px solid #e2e8f0;
       }
 
-      /* HERO SECTION */
       .hero {
         background: linear-gradient(
           135deg,
@@ -99,7 +86,6 @@
         position: relative;
         overflow: hidden;
       }
-      /* Replaced the cubes pattern with a subtle traditional ornament pattern if desired, or keep the cubes. Kept cubes for now for modern feel over the flag */
       .hero::before {
         content: '';
         position: absolute;
@@ -175,7 +161,6 @@
         box-shadow: 0 4px 10px rgba(251, 191, 36, 0.4);
       }
 
-      /* CONTENT SECTION */
       .content {
         padding: 50px;
       }
@@ -233,7 +218,6 @@
         letter-spacing: 0.5px;
       }
 
-      /* FOOTER */
       .footer-action {
         text-align: center;
         padding: 40px;
@@ -258,7 +242,6 @@
         border-color: #94a3b8;
       }
 
-      /* ERROR STATE */
       #errorState {
         display: none;
         text-align: center;
@@ -361,7 +344,6 @@
           if (typeof confetti === 'function') {
             var end = Date.now() + 2.5 * 1000;
             (function frame() {
-              // Used Red blue and Gold for the confetti to match the flag
               confetti({
                 particleCount: 4,
                 angle: 60,
