@@ -1,10 +1,10 @@
-🗳️ Blockchain Election Voting System
+ Blockchain Election Voting System
 A decentralized voting application built with Solidity, Hardhat, and Ethers.js.
 
-📌 Project Overview
+ Project Overview
 This project is a blockchain-based voting system designed to ensure transparency and security in elections. It features a dashboard for the Election Commission (Admin) to manage candidates and an interface for voters to cast their ballots securely via MetaMask.
 
-🛠️ Tech Stack
+ Tech Stack
 Smart Contract: Solidity
 
 Development Environment: Hardhat (Local Blockchain)
@@ -15,7 +15,7 @@ Library: Ethers.js (v6)
 
 Wallet: MetaMask
 
-🚀 Getting Started (Development Setup)
+ Getting Started (Development Setup)
 Follow these steps in order to get the project running on your local machine.
 
 1. Prerequisites
@@ -59,7 +59,7 @@ Bash
 npm run dev
 Open your browser to http://localhost:3000.
 
-🦊 MetaMask Configuration
+MetaMask Configuration
 To interact with the system, configure MetaMask with these settings:
 
 Network Name: Hardhat Local
@@ -70,9 +70,9 @@ Chain ID: 31337
 
 Currency Symbol: ETH
 
-⚠️ Important: If you restart the Hardhat node, you must reset your MetaMask account (Settings > Advanced > Clear Activity Tab Data) to avoid "Nonce" errors.
+ Important: If you restart the Hardhat node, you must reset your MetaMask account (Settings > Advanced > Clear Activity Tab Data) to avoid "Nonce" errors.
 
-📂 Project Structure
+ Project Structure
 contracts/: Contains the Solidity smart contract (Voting.sol).
 
 scripts/: Deployment scripts for Hardhat.
@@ -81,19 +81,4 @@ frontend/: The web interface and Voting.json configuration.
 
 hardhat.config.js: Hardhat network and compiler settings.
 
-🔄 Syncing Between Devices (Git Workflow)
-Before switching between your PC and Laptop, use these commands:
 
-On the machine you are leaving:
-
-Bash
-
-git add .
-git commit -m "Describe your changes"
-git push origin hardhat-migration
-On the machine you are starting on:
-
-Bash
-
-git pull origin hardhat-migration
-npm install   # If it's the first time on this machine
